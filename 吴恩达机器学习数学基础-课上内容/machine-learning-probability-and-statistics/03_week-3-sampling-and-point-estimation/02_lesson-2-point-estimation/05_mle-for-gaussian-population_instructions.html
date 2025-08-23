@@ -1,0 +1,219 @@
+<meta charset="utf-8"/>
+<co-content>
+ <p>
+  In the videos, you got an intuition of what the Maximum Likelihood Estimation (MLE) should look like for the mean and variance of a Gaussian population.
+ </p>
+ <p>
+  In this reading item, you will learn the derivation of both results.
+ </p>
+ <p>
+ </p>
+ <h2 level="2" variant="h2semibold">
+  Mathematical formulation
+ </h2>
+ <p hasmath="true">
+  Suppose you have $$n$$ samples $$\boldsymbol{X} = \left(X_1, X_2, \ldots, X_n\right)$$ from a Gaussian distribution with mean $$\mu$$ and variance $$\sigma^2$$. This means that $$X_i \overset{i.i.d.}{\sim} \mathcal{N}(\mu,\sigma^2)$$.
+ </p>
+ <p hasmath="true">
+  If you want the MLE for $$\mu$$ and $$\sigma$$ the first step is to define the likelihood. If both $$\mu$$ and $$\sigma$$ are unknown, then the likelihood will be a function of these two parameters. For a realization of $$X$$, given by $$x = (x_1, x_2, \ldots, x_n)$$:
+ </p>
+ <p hasmath="true">
+  \[\large\begin{array}{rl}
+L(\mu,\sigma; \boldsymbol{x}) &amp;= \prod_{i=1}^n f_{X_i}(x_i) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma } e^{-\frac{1}{2}\frac{(x_i-\mu)²}{\sigma²}} \\
+&amp;\\
+&amp; \Large  = \frac{1}{\left(\sqrt{2\pi}\right)^n\sigma^n }e^{-\frac{1}{2}\frac{\sum_{i=1}^n (x_i-\mu)²}{\sigma²}}
+\end{array}
+\]
+ </p>
+ <p hasmath="true">
+  Now all you have to do is find the values of $$\mu$$ and $$\sigma$$ that maximize the likelihood $$L(\mu,\sigma;\boldsymbol{x})$$.
+ </p>
+ <p hasmath="true">
+  You might remember from the calculus course that one way to do this analytically is by taking the derivative of the Likelihood function and equating it to 0. The values of $$\mu$$ and $$\sigma$$ that make the derivative zero, are the extreme points. In particular,  for this case, they will be maximums.
+ </p>
+ <p hasmath="true">
+  Taking the derivative of the likelihood is a cumbersome procedure, because of all the products involved.  However, there is a nice trick you can use to simplify things. Note that the logarithm function is always increasing, so the values that maximize $$L(\mu, \sigma ; \boldsymbol{x})$$  will also maximize its logarithm. This is the
+  <strong>
+   log-likelihood
+  </strong>
+  , and it is defined as
+ </p>
+ <p hasmath="true">
+  $$\ell(\mu,\sigma) = \log(L(\mu, \sigma ; \boldsymbol{x}))$$
+ </p>
+ <p hasmath="true">
+  The logarithm has the property of turning a product into a sum, this means that $$\log(a\cdot b) = \log(a)+\log(b)$$. This makes taking the derivative of the log-likelihood very straight forward. To get the simplest expression for the log-likelihood for a Gaussian population, you will also need the following properties of the logarithm:
+ </p>
+ <p hasmath="true">
+  $$\log(1/a) = -\log(a)$$
+ </p>
+ <p>
+  and
+ </p>
+ <p hasmath="true">
+  $$\log(a^k) = k\log(a)$$.
+ </p>
+ <p>
+  Putting it all together you get:
+ </p>
+ <p hasmath="true">
+  \[\large \begin{array}{rl}\ell(\mu,\sigma) &amp;= \log\left( \frac{1}{\left(\sqrt{2\pi}\right)^n\sigma^n }e^{-\frac{1}{2}\frac{\sum_{i=1}^n (x_i-\mu)²}{\sigma²}}\right)\\
+&amp; = -\frac{n}{2}\log(2\pi) - n\log(\sigma) - \frac{1}{2}\frac{\sum_{i=1}^n (x_i-\mu)²}{\sigma²}
+\end{array}\]
+ </p>
+ <p hasmath="true">
+  Now to find the MLE for $$\mu$$ and $$\sigma$$, all there is left to do is take the partial derivatives of the log-likelihood, and equate them to zero.
+ </p>
+ <p hasmath="true">
+  For the partial derivative with respect to $$\mu$$ note that the first two terms do not involve $$\mu$$,  so you get:
+ </p>
+ <p hasmath="true">
+  \[\large\begin{array}{rl}
+\frac{\partial }{\partial \mu}\ell(\mu, \sigma) &amp;= -\frac{1}{2}\frac{\sum_{i=1}^n 2(x_i -\mu)}{\sigma²}(-1)\\
+\tiny&amp;\\
+&amp;=\frac{1}{\sigma^2}\left(\sum_{i=1}^n x_i -\sum_{i=1}^n \mu\right) = \frac{1}{\sigma^2}\left(\sum_{i=1}^n x_i -n\mu\right)
+\end{array}
+\]
+ </p>
+ <p hasmath="true">
+  Now, for the partial derivative with respect to $$\sigma$$ you get that
+ </p>
+ <p hasmath="true">
+  \[\frac{\partial}{\partial \sigma} \ell(\mu,\sigma) = -\frac{n}{\sigma} 
+ - \frac{1}{2}\left(\sum_{i=1}^n(x_i - \mu)²\right)(-2)\frac{1}{\sigma³} = -\frac{n}{\sigma} 
+ + \left(\sum_{i=1}^n(x_i - \mu)²\right)\frac{1}{\sigma³}
+\]
+ </p>
+ <p hasmath="true">
+  The next step is equating this to 0 to find the estimates for $$\mu$$ and $$\sigma$$. Let's begin with the partial derivative with respect to $$\mu$$:
+ </p>
+ <p hasmath="true">
+  $$\frac\partial{\partial\mu}\ell(\mu,\sigma) = \frac{1}{\sigma^2}\left(\sum_{i=1}^n x_i -n\mu\right) =0$$
+ </p>
+ <p hasmath="true">
+  First, observe that since $$\sigma&gt;0$$, the only option is that $$\sum_{i=1}^nx_i - n \mu =0$$. Simple algebraic manipulations show that the MLE for $$\mu$$ has to be
+ </p>
+ <p hasmath="true">
+  \[\hat\mu = \frac{\sum_{i=1}^nx_i}{n}= \overline x, \]
+ </p>
+ <p>
+  which is the sample mean.
+ </p>
+ <p hasmath="true">
+  Next, find the value of $$\sigma$$ that achieves $$\frac{\partial}{\partial \sigma}\ell(\mu, \sigma) =0$$:
+ </p>
+ <p hasmath="true">
+  \[\frac{\partial}{\partial \sigma}\ell(\mu, \sigma) =-\frac{n}{\sigma} 
+ + \left(\sum_{i=1}^n(x_i - \mu)²\right)\frac{1}{\sigma³}=0
+\]
+ </p>
+ <p hasmath="true">
+  In this case, first note that since $$\sigma&gt;0$$ you can simplify the expression to
+ </p>
+ <p hasmath="true">
+  $$\frac{\partial}{\partial \sigma}\ell(\mu, \sigma) =-n  + \left(\sum_{i=1}^n(x_i - \mu)²\right)\frac{1}{\sigma²}=0$$
+ </p>
+ <p>
+ </p>
+ <p hasmath="true">
+  Also, you can replace $$\mu$$ by its estimate $$\hat\mu = \overline x$$, because yuo want both partial derivatives to be 0 at the same time. You get
+ </p>
+ <p hasmath="true">
+  $$\frac{\partial}{\partial \sigma}\ell(\mu, \sigma) =-n 
+ + \left(\sum_{i=1}^n(x_i - \overline x)²\right)\frac{1}{\sigma²}=0
+$$
+ </p>
+ <p>
+  This gives you
+ </p>
+ <p hasmath="true">
+  $$\sigma² = \frac{\sum(x_i - \overline x)²}{n}$$,
+ </p>
+ <p>
+  so the MLE for the standard deviation is
+ </p>
+ <p hasmath="true">
+  \[\hat\sigma = \sqrt{\frac{\sum(x_i - \overline x)²}{n}}\]
+ </p>
+ <p hasmath="true">
+  This expression tells you that the MLE for the standard deviation of a Gaussian population is the square root of the average squared difference between each sample and the sample mean. This expression is very similar to the one you learnt in Week 2 for the sample standard deviation. The only difference is the normalizing constant: for the MLE you have $$1/n$$ while for the sample standard deviation you use $$1/(n-1)$$.
+ </p>
+ <p>
+  A final comment: formally, what you just did was the derivation of the critical point. To make it all complete, you would need to show that these are the  coordinates of a maximum point (and not a minimum or saddle point). However,  this  proof would require a little bit more complicated math and we will  skip it here.
+ </p>
+ <h2 level="2" variant="h2semibold">
+  A simple example
+ </h2>
+ <p>
+  Now, let's see how this looks like with an example. Suppose you are interested on distribution of heights of 18 year olds in the US. You have the following 10 measurements:
+ </p>
+ <p hasmath="true">
+  \[ \begin{matrix}66.75 &amp; 70.24 &amp; 67.19 &amp;67.09&amp; 63.65\\ 64.64 &amp; 69.81 &amp; 69.79 &amp; 73.52 &amp; 71.74 \end{matrix}\]
+ </p>
+ <p hasmath="true">
+  Each measurement is supposed to come from a Gaussian distribution with unknown parameters $$\mu$$ and $$\sigma$$.  The MLE estimation for the parameters with this samples are
+ </p>
+ <p hasmath="true">
+  \[\hat\mu = \frac{66.75+ 70.24+ 67.19+ 67.09+ 63.65+ 64.64+ 69.81+ 69.79+ 73.52+ 71.74}{10} = 68.442\]
+ </p>
+ <p>
+  and
+ </p>
+ <p hasmath="true">
+  \[\begin{array}{rl}\hat\sigma &amp;= \sqrt{\frac{1}{10}\left(
+\begin{array}{l}(66.75-68.442)^2+ (70.24-68.442)^2+ (67.19-68.442)^2+ (67.09-68.442)^2+ \\(63.65-68.442)^2+(64.64-68.442)^2+ (69.81-68.442)^2+ (69.79-68.442)^2+ \\(73.52-68.442)^2+(71.74-68.442)^2\end{array}
+\right)} \\
+&amp;= 2.954
+\end{array}\]
+ </p>
+ <p>
+ </p>
+</co-content>
+<style>
+ body {
+    padding: 50px 85px 50px 85px;
+}
+
+table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 5px 20px;
+    text-align: left;
+}
+input {
+    margin: 10px;
+}
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+pre {
+    display: block;
+    margin: 20px;
+    background: #424242;
+    color: #fff;
+    font-size: 13px;
+    white-space: pre-wrap;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+</style>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ['$','$'] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  });
+</script>
