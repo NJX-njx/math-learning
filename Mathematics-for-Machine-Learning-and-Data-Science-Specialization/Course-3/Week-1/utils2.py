@@ -190,12 +190,13 @@ class monty_hall_game:
         self.results_ax.set_title(
             f"Games finished: {self.games_finished}\nGames you switched: {self.memory_games['switch']}, Games you stayed: {self.memory_games['stay']}"
         )
+        switch_games = self.memory_games['switch']
+        stay_games = self.memory_games['stay']
+        switch_win_rate = self.memory_wins["switch"] / switch_games if switch_games > 0 else 0
+        stay_win_rate = self.memory_wins["stay"] / stay_games if stay_games > 0 else 0
         self.results_ax.scatter(
             ["switch", "stay"],
-            [
-                self.memory_wins["switch"] / self.memory_games['switch'],
-                self.memory_wins["stay"] / self.memory_games['stay'],
-            ],
+            [switch_win_rate, stay_win_rate],
             s=350,
         )
         self.results_ax.set_ylim(0, 1)
